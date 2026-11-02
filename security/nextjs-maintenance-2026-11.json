@@ -1,0 +1,81 @@
+{
+  "date": "2026-11-02",
+  "scope": "Next.js 15 and 16 manifests only; not a complete repository remediation",
+  "manifest_changes": [
+    {
+      "path": "anime-watch-hub/package.json",
+      "section": "dependencies",
+      "before": "16.0.10",
+      "after": "16.4.4"
+    },
+    {
+      "path": "bestbet/package.json",
+      "section": "dependencies",
+      "before": "16.1.4",
+      "after": "16.4.4"
+    },
+    {
+      "path": "code-reference-finder/package.json",
+      "section": "dependencies",
+      "before": "16.1.6",
+      "after": "16.4.4"
+    },
+    {
+      "path": "competitor-analysis/package.json",
+      "section": "dependencies",
+      "before": "16.1.5",
+      "after": "16.4.4"
+    },
+    {
+      "path": "competitor-scout-cli/package.json",
+      "section": "dependencies",
+      "before": "16.0.10",
+      "after": "16.4.4"
+    },
+    {
+      "path": "fast-qa/package.json",
+      "section": "dependencies",
+      "before": "16.1.3",
+      "after": "16.4.4"
+    },
+    {
+      "path": "game-buying-guide/package.json",
+      "section": "dependencies",
+      "before": "16.0.10",
+      "after": "16.4.4"
+    },
+    {
+      "path": "lego-hunter/package.json",
+      "section": "dependencies",
+      "before": "16.1.1",
+      "after": "16.4.4"
+    },
+    {
+      "path": "silicon-signal/package.json",
+      "section": "dependencies",
+      "before": "16.1.3",
+      "after": "16.4.4"
+    },
+    {
+      "path": "tinyskills/package.json",
+      "section": "dependencies",
+      "before": "16.1.5",
+      "after": "16.4.4"
+    },
+    {
+      "path": "viet-bike-scout/package.json",
+      "section": "dependencies",
+      "before": "16.1.6",
+      "after": "16.4.4"
+    }
+  ],
+  "validation": [
+    "Modified manifests parse as JSON; only Next.js ranges changed",
+    "npm and pnpm lockfile regeneration completed without lifecycle scripts"
+  ],
+  "remaining": [
+    "Full workspace builds/tests are not validated",
+    "Next.js 13/14 projects require migration",
+    "Other vulnerable packages and runtime/deployment versions remain unremediated"
+  ]
+}

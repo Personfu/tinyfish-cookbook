@@ -223,3 +223,24 @@ This repository is a community-driven space for sharing derivatives, code sample
 
 
 
+
+## November 2026 framework maintenance
+
+The security maintenance branch updates existing Next.js 15 projects to 15.5.28
+and Next.js 16 projects to 16.4.4. See
+[`security/nextjs-maintenance-2026-11.json`](security/nextjs-maintenance-2026-11.json)
+for the exact manifest changes and outstanding validation. Lockfiles were
+regenerated without running dependency lifecycle scripts. This batch remains
+under review until the affected applications and workspaces pass their own
+build and behavior checks; it does not establish that the entire repository is
+free of vulnerabilities.
+
+Older Next.js 13/14 projects still need an explicit migration. Templates and
+examples can create vulnerable downstream projects even if they are not
+deployed here, so include them in the remaining work. Follow each subproject's
+package manager and environment instructions. Do not run production migrations,
+payment flows or signing operations as dependency validation. Rebuild and
+verify deployed runtimes after a patch rather than closing an alert based only
+on a manifest edit.
+
+Source: [Next.js October 2026 security update](https://nextjs.org/blog/nextjs-security-update-october-14-2026).
