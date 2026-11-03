@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import {
   Dialog,
   DialogContent,
@@ -29,18 +29,20 @@ export function ProjectDialog({
   project,
   onSave,
 }: ProjectDialogProps) {
+  return (
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent>
+        <ProjectForm key={project?.id ?? 'new'} project={project} onSave={onSave} onOpenChange={onOpenChange} />
+      </DialogContent>
+    </Dialog>
+  );
+}
+
+function ProjectForm({ project, onSave, onOpenChange }: Omit<ProjectDialogProps, 'open'>) {
   const [name, setName] = useState(project?.name || '');
   const [websiteUrl, setWebsiteUrl] = useState(project?.websiteUrl || '');
   const [description, setDescription] = useState(project?.description || '');
   const [urlError, setUrlError] = useState<string | null>(null);
-
-  // Sync form state when project prop changes
-  useEffect(() => {
-    setName(project?.name || '');
-    setWebsiteUrl(project?.websiteUrl || '');
-    setDescription(project?.description || '');
-    setUrlError(null);
-  }, [project]);
 
   const handleSave = () => {
     // Validate URL
@@ -70,8 +72,7 @@ export function ProjectDialog({
   };
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent>
+    <>
         <DialogHeader>
           <DialogTitle>{project ? 'Edit Project' : 'Create New Project'}</DialogTitle>
           <DialogDescription>
@@ -126,7 +127,6 @@ export function ProjectDialog({
             {project ? 'Save Changes' : 'Create Project'}
           </Button>
         </DialogFooter>
-      </DialogContent>
-    </Dialog>
+    </>
   );
 }

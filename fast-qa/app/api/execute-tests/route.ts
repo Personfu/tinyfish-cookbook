@@ -42,7 +42,8 @@ export async function POST(request: NextRequest) {
   (async () => {
     try {
       const body: ExecuteTestsRequest = await request.json();
-      let { testCases, websiteUrl, parallelLimit = 3, settings } = body;
+      const { testCases, websiteUrl, settings } = body;
+      let { parallelLimit = 3 } = body;
       
       // Validate and sanitize parallelLimit to prevent infinite loops
       parallelLimit = Math.max(1, Math.min(10, Math.floor(Number(parallelLimit) || 3)));
@@ -117,13 +118,13 @@ export async function POST(request: NextRequest) {
           duration: Date.now() - startTime,
         },
       });
-    } catch (error) {
-      console.error('Error in execute-tests API:', error);
+    } catch {
+      console.error('Test execution request failed');
       await sendEvent({
         type: 'test_error',
         testCaseId: 'system',
         timestamp: Date.now(),
-        data: { error: error instanceof Error ? error.message : 'Unknown error' },
+        data: { error: 'Test execution request failed' },
       });
     } finally {
       await closeWriter();
@@ -258,8 +259,8 @@ async function executeTestCase(
           websiteUrl
         );
         reason = aiSummary;
-      } catch (summaryError) {
-        console.error('Failed to generate AI summary:', summaryError);
+      } catch {
+        console.error('Failed to generate AI summary');
         // Keep the existing reason or error
       }
     }
@@ -286,9 +287,9 @@ async function executeTestCase(
     });
 
     return testResult;
-  } catch (error) {
+  } catch {
     const completedAt = Date.now();
-    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+    const errorMessage = 'Test execution failed';
     const errorDuration = completedAt - startTime;
 
     // Try to generate an AI summary for the error

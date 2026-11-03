@@ -202,3 +202,12 @@ sequenceDiagram
 - **Bug Report Generation** - AI-powered bug reports with severity & reproduction steps
 - **Project Management** - Organize tests by project/website
 - **Persistent Storage** - LocalStorage for session continuity
+
+
+## Report privacy and local checks
+
+Bug-report context uses a shared redactor for common email, phone and card patterns in the title, description, expected outcome, error, project URL and nested extracted data. Nested values retain their JSON shape; numeric card/phone-shaped values are redacted too. Provider exceptions use generic diagnostics instead of recording raw request or response objects. This pattern filter does not anonymize arbitrary personal data or credentials, and it does not erase already stored reports or provider history.
+
+Use synthetic data and accounts for browser automation. The demo API routes do not establish a per-user authorization boundary; protect a hosted deployment before giving it provider credentials or real test/customer data. Actual browser goals and normal test results still reach the selected automation/AI services as part of the requested feature.
+
+From this application folder, run `node --test tests/report-privacy.test.mjs`, `npm run lint`, `npx tsc --noEmit`, `npm run build` and a full `npm audit`. Install/build checks do not prove that a hosted deployment or every other cookbook example is patched. The repository maintenance PR remains a draft until its other applications have been checked.

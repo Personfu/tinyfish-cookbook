@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { generateBugReport } from '@/lib/ai-client';
+import { redactReportData, redactReportText } from '@/lib/report-privacy.mjs';
 import type { TestCase, TestResult } from '@/types';
 
 interface GenerateReportRequest {
@@ -27,34 +28,24 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Sanitize PII from description and extractedData before sending to third-party
-    const sanitizePII = (text: string | undefined): string => {
-      if (!text) return '';
-      // Remove email addresses, phone numbers, and credit card patterns
-      return text
-        .replace(/\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b/g, '[EMAIL_REDACTED]')
-        .replace(/\b\d{3}[-.]?\d{3}[-.]?\d{4}\b/g, '[PHONE_REDACTED]')
-        .replace(/\b\d{4}[\s-]?\d{4}[\s-]?\d{4}[\s-]?\d{4}\b/g, '[CARD_REDACTED]');
-    };
-
     const report = await generateBugReport(
       {
-        title: testCase.title,
-        description: sanitizePII(testCase.description),
-        expectedOutcome: testCase.expectedOutcome,
+        title: redactReportText(testCase.title),
+        description: redactReportText(testCase.description),
+        expectedOutcome: redactReportText(testCase.expectedOutcome),
       },
       {
-        error: failedTest.error,
-        extractedData: sanitizePII(JSON.stringify(failedTest.extractedData)),
+        error: redactReportText(failedTest.error),
+        extractedData: redactReportData(failedTest.extractedData),
       },
-      projectUrl
+      redactReportText(projectUrl)
     );
 
     return NextResponse.json(report);
-  } catch (error) {
-    console.error('Error generating bug report:', error);
+  } catch {
+    console.error('Failed to generate bug report');
     return NextResponse.json(
-      { error: error instanceof Error ? error.message : 'Failed to generate bug report' },
+      { error: 'Failed to generate bug report' },
       { status: 500 }
     );
   }

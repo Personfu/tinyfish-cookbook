@@ -100,10 +100,10 @@ Generate a list of test cases based on this input. Cover the main functionality,
     const validated = bulkGenerateSchema.parse(parsed);
 
     return NextResponse.json({ testCases: validated.testCases });
-  } catch (error) {
-    console.error('Error generating tests:', error);
+  } catch {
+    console.error('Failed to generate tests');
     return NextResponse.json(
-      { error: error instanceof Error ? error.message : 'Failed to generate tests' },
+      { error: 'Failed to generate tests' },
       { status: 500 }
     );
   }
