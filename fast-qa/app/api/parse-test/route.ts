@@ -22,10 +22,10 @@ export async function POST(request: NextRequest) {
     const result = await parseTestDescription(plainEnglish, websiteUrl);
 
     return NextResponse.json(result);
-  } catch (error) {
-    console.error('Error parsing test description:', error);
+  } catch {
+    console.error('Failed to parse test description');
     return NextResponse.json(
-      { error: error instanceof Error ? error.message : 'Failed to parse test description' },
+      { error: 'Failed to parse test description' },
       { status: 500 }
     );
   }

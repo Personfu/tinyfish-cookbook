@@ -129,8 +129,8 @@ export async function runMinoAutomation(
       streamingUrl,
       events,
     };
-  } catch (error) {
-    const errorMsg = error instanceof Error ? error.message : String(error);
+  } catch {
+    const errorMsg = 'Browser automation request failed';
     callbacks?.onError?.(errorMsg);
     return {
       success: false,

@@ -77,5 +77,38 @@
     "Full workspace builds/tests are not validated",
     "Next.js 13/14 projects require migration",
     "Other vulnerable packages and runtime/deployment versions remain unremediated"
-  ]
+  ],
+  "application_followup_2026_11_03": {
+    "application": "fast-qa",
+    "checked_at": "2026-11-03T19:23:53.271188+00:00",
+    "checks": [
+      "Full source materialized",
+      "Clean install without lifecycle scripts",
+      "Two report-redaction regression checks",
+      "Real ESLint:0errors/0warnings",
+      "TypeScript check",
+      "Production Next16.4.4 build"
+    ],
+    "full_audit": {
+      "info": 0,
+      "low": 0,
+      "moderate": 15,
+      "high": 0,
+      "critical": 0,
+      "total": 15
+    },
+    "changes": [
+      "Compatible non-forced lock updates remove all prior8high and5low audit findings; remaining moderate findings retained",
+      "Structured common-pattern redaction across report fields and generic caught-provider diagnostics",
+      "Reset dialog form through component lifetime and key instead of synchronous effect",
+      "Stable keyboard shortcut modifier dependencies"
+    ],
+    "limits": [
+      "Other modified cookbook applications remain unvalidated; PR stays draft",
+      "Pattern redaction is not arbitrary data anonymization or historical/provider deletion",
+      "API routes require deployment-level access control before real provider/customer use",
+      "November Next.js patch metadata is incomplete/conflicting; package update alone is not closure",
+      "No real AI/browser-vendor/signing/payment/database operation used for validation"
+    ]
+  }
 }

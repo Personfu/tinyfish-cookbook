@@ -277,6 +277,7 @@ export function useKeyboardShortcut(
   callback: () => void,
   modifiers: { ctrl?: boolean; meta?: boolean; shift?: boolean; alt?: boolean } = {}
 ) {
+  const { ctrl, meta, shift, alt } = modifiers;
   // Use a ref to store the callback to avoid stale closures
   const callbackRef = useRef(callback);
   
@@ -287,7 +288,6 @@ export function useKeyboardShortcut(
 
   useEffect(() => {
     function handleKeyDown(event: KeyboardEvent) {
-      const { ctrl, meta, shift, alt } = modifiers;
       const modifierMatch =
         (ctrl === undefined || event.ctrlKey === ctrl) &&
         (meta === undefined || event.metaKey === meta) &&
@@ -302,7 +302,7 @@ export function useKeyboardShortcut(
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [key, modifiers.ctrl, modifiers.meta, modifiers.shift, modifiers.alt]);
+  }, [key, ctrl, meta, shift, alt]);
 }
 
 /**

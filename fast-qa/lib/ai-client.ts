@@ -99,9 +99,9 @@ Return a JSON object with:
       prompt,
     });
     return object;
-  } catch (error) {
+  } catch {
     // Fallback to generateText with JSON parsing
-    console.log('generateObject failed, falling back to generateText:', error);
+    console.warn('Structured generation failed; trying a text response');
 
     const { text } = await generateText({
       model,
@@ -175,8 +175,8 @@ Respond with ONLY the JSON object, nothing else.`;
       prompt,
     });
     return object;
-  } catch (error) {
-    console.log('generateObject failed, falling back to generateText:', error);
+  } catch {
+    console.warn('Structured generation failed; trying a text response');
 
     const { text } = await generateText({
       model,
@@ -317,8 +317,8 @@ Provide 3-5 bullet points explaining why this test ${result.status}. Each bullet
       prompt,
     });
     return text.trim();
-  } catch (error) {
-    console.error('Failed to generate test summary:', error);
+  } catch {
+    console.error('Failed to generate test summary');
     // Fallback to basic summary
     if (result.status === 'passed') {
       return result.steps && result.steps.length > 0
